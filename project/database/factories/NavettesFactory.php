@@ -24,14 +24,12 @@ class NavettesFactory extends Factory
             "description" => fake()->text(),
             "type_vehicule" => fake()->text(20),
             "price" => fake()->randomFloat(0,20,500),
-            "date_navette" => fake()->date(),
+            "date_navette" => fake()->dateTimeBetween('now', '+1 day')->format('Y-m-d'),
             "places_disponible" => fake()->numberBetween(10, 100),
             "city_start" => citys::all()->random()->id ,
             "city_arrive" => citys::all()->random()->id,
             "time_start" => fake()->time(),
             "time_end" => fake()->time()
         ];
-        // $table->dropForeign('city_start');
-        // $table->dropForeign('city_arrive');
     }
 }

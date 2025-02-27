@@ -3,6 +3,8 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CitysController;
 use App\Http\Controllers\PageController;
+use App\Http\Controllers\UserController;
+use App\Http\Middleware\AuthValidation;
 use Illuminate\Support\Facades\Route;
 
 //View
@@ -18,9 +20,11 @@ Route::get('/post/{id}', [PageController::class , "post"])->name('post');
 Route::post('/signin', [AuthController::class , "signin"])->name("signin");
 Route::post('/logout', [PageController::class , "logout"])->name("logout");
 
-Route::middleware(['AuthValidation'])->group(function(){
-    Route::get('/dashboard', [PageController::class , "home"])->name('dashboard');
-    Route::get('/profile', [PageController::class , "home"])->name('profile');
+Route::middleware(AuthValidation::class)->group(function(){
+    Route::get('/dashboard', [PageController::class , "dashboard"])->name('dashboard');
+    Route::get('/profile', [PageController::class , "profile"])->name('profile');
+    //
+    Route::get('/profile/edit', [UserController::class , "edit"])->name('profile.edit');
 });
 
 //api

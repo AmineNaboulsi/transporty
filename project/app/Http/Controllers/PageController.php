@@ -4,7 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Models\citys;
 use App\Models\navettes;
+use App\Models\reservations;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+
+use function Laravel\Prompts\table;
 
 class PageController extends Controller
 {
@@ -22,18 +26,27 @@ class PageController extends Controller
         $date = request()?->date;
 
         if (!empty($departure)) {
-            $query->where('city_arrive', 'like', "%$departure%");
+            $query->where(function($q) use ($departure) {
+                $q->where('city_arrive', '=', $departure)
+                  ->orWhere('city_start', 'LIKE', "%{$departure}%");
+            });
         }
 
         if (!empty($destination)) {
-            $query->where('city_start', 'like', "%$destination%");
+            $query->where(function($q) use ($destination) {
+                $q->where('city_start', '=', $destination)
+                  ->orWhere('city_arrive', 'LIKE', "%{$destination}%");
+            });
         }
 
         if (!empty($date)) {
             $query->whereDate('date_navette', $date);
         }
 
-        $navettes = $query->paginate(10);
+        $navettes = $query->get();
+        // if(count($navettes)==0){
+        //     $navettes = $query->paginate(10);
+        // }
 
         return view('navettes.index', compact('navettes', 'departure', 'destination', 'date'));
     }
@@ -66,5 +79,33 @@ class PageController extends Controller
         echo "forgetpassword";
         // return view('forgetpassword');
     }
+      /**
+     *
+     */
+    public function dashboard() {
+        return view('dashborad.index');
+    }
+
+      /**
+     *
+     */
+    public function profile() {
+        // $upcomingReservations  = reservations::all();
+        $upcomingReservations  = DB::table('reservations')
+            ->join('navettes', 'reservations.navette_id', '=', 'navettes.id')
+            ->join('citys as cs', 'cs.id', '=', 'navettes.city_start')
+            ->join('citys as ce', 'ce.id', '=', 'navettes.city_arrive')
+            ->select(
+                'reservations.*',
+                'navettes.*',
+                'cs.name as start_city',
+                'ce.name as end_city',
+                'ce.region as start_city_region'
+            )
+            ->get();
+        // return response()->json($upcomingReservations);
+        return view('profile.index',compact("upcomingReservations"));
+    }
+
 
 }

@@ -4,9 +4,6 @@
 
 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-12 mt-10">
     <h2 class="text-2xl font-bold text-gray-900 mb-6">All Available Navettes</h2>
-    <div class="mt-6 py-6">
-        {{ $navettes->links() }}
-    </div>
     <div class="grid grid-cols-1 gap-6">
         @if(count($navettes)==0)
             <div class="bg-white shadow rounded-lg p-8 text-center">

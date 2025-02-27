@@ -3,7 +3,6 @@
 
 @section('content')
 <div class="bg-gradient-to-r from-blue-500 to-indigo-600">
-    <!-- Hero Section -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-24">
         <div class="text-center">
             <h1 class="text-4xl md:text-5xl font-extrabold text-white tracking-tight">
@@ -61,7 +60,6 @@
     </div>
 </div>
 
-<!-- Popular Routes Section -->
 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
     <h2 class="text-2xl font-bold text-gray-900 mb-6">Popular Routes</h2>
     <div class="grid grid-cols-1 md:grid-cols-3 gap-6">

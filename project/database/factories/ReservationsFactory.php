@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\navettes;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -17,7 +18,8 @@ class ReservationsFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            "navette_id" => navettes::all()->random()->id,
+            "status" => fake()->randomElement(["Pending", "Confirmed"])
         ];
     }
 }

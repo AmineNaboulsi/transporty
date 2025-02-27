@@ -14,7 +14,10 @@ class CitysSeeder extends Seeder
     public function run(): void
     {
         $cities = [
-           ['name' => 'Fes', 'region' => 'Fès-Meknès', 'latitude' => 34.0331, 'longitude' => -5.0003],
+            ['name' => 'Casablanca', 'region' => 'Casablanca-Settat', 'latitude' => 33.5731, 'longitude' => -7.5898],
+            ['name' => 'Rabat', 'region' => 'Rabat-Salé-Kénitra', 'latitude' => 34.0209, 'longitude' => -6.8416],
+            ['name' => 'Marrakech', 'region' => 'Marrakech-Safi', 'latitude' => 31.6295, 'longitude' => -7.9811],
+            ['name' => 'Fes', 'region' => 'Fès-Meknès', 'latitude' => 34.0331, 'longitude' => -5.0003],
             ['name' => 'Tangier', 'region' => 'Tanger-Tétouan-Al Hoceïma', 'latitude' => 35.7595, 'longitude' => -5.83395],
             ['name' => 'Agadir', 'region' => 'Souss-Massa', 'latitude' => 30.4278, 'longitude' => -9.5981],
             ['name' => 'Meknes', 'region' => 'Fès-Meknès', 'latitude' => 33.8955, 'longitude' => -5.5541],

@@ -13,6 +13,6 @@ class NavettesSeeder extends Seeder
      */
     public function run(): void
     {
-        navettes::factory()->count(10)->create();
+        navettes::factory()->count(100)->create();
     }
 }
