@@ -10,10 +10,9 @@ services:
     ports:
       - "5432:5432"
     volumes:
-      - postgres_data:/var/lib/postgresql/data
+      - postgres_db:/var/lib/postgresql/data
     networks:
       - laravel_network
-
   pgadmin:
     image: dpage/pgadmin4
     container_name: PgAdminLaravel
@@ -41,9 +40,8 @@ services:
     networks:
       - laravel_network
 
-
 volumes:
-  postgres_data:
+  postgres_db:
   
 networks:
   laravel_network:
