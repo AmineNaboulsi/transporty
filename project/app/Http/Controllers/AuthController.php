@@ -16,7 +16,7 @@ class AuthController extends Controller
      * Login Method
      *
      */
-    public function signin(AuthSignin $request)
+    public function signin(Request $request)
     {
         $credentials = [
             'email' => $request->email,
@@ -46,10 +46,10 @@ class AuthController extends Controller
     {
         try {
             $validatedData = $request->validate([
-                'name' => 'required|string|max:255',
-                'email' => 'required|string|email|max:255|unique:users',
-                'password' => 'required|string|min:8|confirmed',
-                'type' => 'required|string|in:company,individual'
+                'name' => 'required|string',
+                'email' => 'required|string|email',
+                'password' => 'required|string',
+                'account_type' => 'required|string|in:company,passenger'
             ]);
         } catch (ValidationException $e) {
             $missingParams = array_keys($e->validator->failed());
@@ -58,7 +58,6 @@ class AuthController extends Controller
                 'message' => "Missing parametres"
             ], 422);
         }
-
 
         if (User::where('email', $validatedData['email'])->exists()) {
             return response()->json([
@@ -71,7 +70,7 @@ class AuthController extends Controller
             'name' => $validatedData['name'],
             'email' => $validatedData['email'],
             'password' => Hash::make($validatedData['password']),
-            'role_id' => $validatedData['type'] == "company" ? 2 : 3
+            'role_id' => $validatedData['account_type'] == "company" ? 2 : 3
         ]);
 
         if ($user) {

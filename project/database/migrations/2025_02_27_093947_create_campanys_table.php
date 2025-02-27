@@ -11,10 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('userpermissions', function (Blueprint $table) {
+        Schema::create('campanys', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained();
-            $table->foreignId('permission_id')->constrained('permissions');
+            $table->foreignId("user_id")->constrained();
+            $table->string('description');
+            $table->string('logo');
+            $table->string('adresse');
+            $table->string('telephone');
+            $table->softDeletes();
             $table->timestamps();
         });
     }
@@ -24,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('userpermissions');
+        Schema::dropIfExists('campanys');
     }
 };
