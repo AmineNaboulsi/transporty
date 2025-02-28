@@ -48,14 +48,19 @@
                                         <svg  class="ml-2 -mr-0.5 h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
                                             <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
                                         </svg>
-                                        <div id="profilmenu" class="absolute bg-white border-[1px] bordr-black top-6 right-6 rounded-xl hidden mt-3">
-                                            <a href="{{route('profile')}}" class="block pl-3 pr-4 py-2 border-l-4 border-transparent text-base font-medium text-gray-600 hover:text-gray-800 hover:bg-gray-50 hover:border-gray-300 focus:outline-none focus:text-gray-800 focus:bg-gray-50 focus:border-gray-300 transition">
-                                                Your Profile
-                                            </a>    
-                                            <a href="{{route('dashboard')}}" class="block pl-3 pr-4 py-2 border-l-4 border-transparent text-base font-medium text-gray-600 hover:text-gray-800 hover:bg-gray-50 hover:border-gray-300 focus:outline-none focus:text-gray-800 focus:bg-gray-50 focus:border-gray-300 transition">
-                                                Dashboard
+                                        <div id="profilmenu" class="absolute bg-white border-[1px] w-48 bordr-black top-6 right-6 rounded-xl hidden mt-3">
+                                            @if(Auth::user()->role_id == 3)
+                                                <a href="{{route('profile.index')}}" class="block pl-3 pr-4 py-2 border-l-4 border-transparent text-base font-medium text-gray-600 transition">
+                                                    Profile
+                                                </a>
+                                            @else
+                                                <a href="{{route('dashboard')}}" class="block pl-3 pr-4 py-2 border-l-4 border-transparent text-base font-medium text-gray-600 transition">
+                                                    Dashboard
+                                                </a>
+                                            @endif
+                                            <a href="{{route('logout')}}" class="block pl-3 pr-4 py-2 border-l-4 border-transparent text-base font-medium text-gray-600 transition">
+                                                Logout
                                             </a>
-
                                         </div>
                                     </button>
                                 </div>

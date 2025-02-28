@@ -5,9 +5,17 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StorecitysRequest;
 use App\Http\Requests\UpdatecitysRequest;
 use App\Models\citys;
+use App\Models\navettes;
 
 class CitysController extends Controller
 {
+
+    public function getnavette()
+    {
+        //
+        $navettes = navettes::query()->with(['cityStart','cityArrive'])->get();
+        return response()->json($navettes);
+    }
 
     public function getcitys()
     {

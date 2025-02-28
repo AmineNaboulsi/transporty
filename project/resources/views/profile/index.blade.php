@@ -1,47 +1,21 @@
-@extends('layouts.app')
+@extends('layouts.profile')
 
 @section('content')
-<div class="bg-gradient-to-r from-blue-500 to-indigo-600">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div class="flex flex-col md:flex-row items-center md:items-start">
-            <div class="flex-shrink-0 mb-4 md:mb-0 md:mr-6">
-                <img class="h-24 w-24 rounded-full border-4 border-white" src="https://cdn.pixabay.com/photo/2023/02/18/11/00/icon-7797704_640.png  " alt="{{ Auth::user()->name ?? 'User' }}">
-            </div>
-            <div class="text-center md:text-left">
-                <h1 class="text-3xl font-bold text-white">{{ Auth::user()->name ?? 'User Name' }}</h1>
-                <p class="text-indigo-100">Member since {{ Auth::user()->created_at->format('F Y') ?? 'January 2023' }}</p>
-                <div class="mt-3 flex flex-wrap justify-center md:justify-start gap-2">
-                    <a href="{{ route('profile.edit') }}" class="inline-flex items-center px-3 py-1.5 border border-transparent text-sm font-medium rounded-md text-indigo-600 bg-white hover:bg-indigo-50">
-                        <svg class="h-4 w-4 mr-1" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
-                        </svg>
-                        Edit Profile
-                    </a>
-                    <a href="" class="inline-flex items-center px-3 py-1.5 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-800 hover:bg-indigo-700">
-                        <svg class="h-4 w-4 mr-1" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
-                        </svg>
-                        Change Password
-                    </a>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+
 
 <div class="bg-white shadow">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex overflow-x-auto">
-            <a href="" class="py-4 px-6 border-b-2 border-indigo-500 font-medium text-indigo-600 whitespace-nowrap">
+            <a href="{{route('profile.index')}}" class="py-4 px-6 border-b-2 border-indigo-500 font-medium text-indigo-600 whitespace-nowrap">
                 My Reservations
             </a>
-            <a href="" class="py-4 px-6 border-b-2 border-transparent font-medium text-gray-600 hover:text-gray-900 hover:border-gray-300 whitespace-nowrap">
+            <a  href="{{route('profile.favorite')}}" class="py-4 px-6 border-b-2 border-transparent font-medium text-gray-600 hover:text-gray-900 hover:border-gray-300 whitespace-nowrap">
                 Favorite Routes
             </a>
-            <a href="" class="py-4 px-6 border-b-2 border-transparent font-medium text-gray-600 hover:text-gray-900 hover:border-gray-300 whitespace-nowrap">
+            <a  href="{{route('profile.payment')}}" class="py-4 px-6 border-b-2 border-transparent font-medium text-gray-600 hover:text-gray-900 hover:border-gray-300 whitespace-nowrap">
                 Payment History
             </a>
-            <a href="" class="py-4 px-6 border-b-2 border-transparent font-medium text-gray-600 hover:text-gray-900 hover:border-gray-300 whitespace-nowrap">
+            <a  href="{{route('profile.notification')}}" class="py-4 px-6 border-b-2 border-transparent font-medium text-gray-600 hover:text-gray-900 hover:border-gray-300 whitespace-nowrap">
                 Notifications
             </a>
         </div>
@@ -83,7 +57,11 @@
 
     <div class="mb-8">
         <h3 class="text-lg font-medium text-gray-900 mb-4">Upcoming Reservations</h3>
-
+        @if($upcomingReservations->hasPages())
+            <div class="mt-4 mb-4">
+            {{ $upcomingReservations->links() }}
+            </div>
+        @endif
         @forelse($upcomingReservations ?? [] as $reservation)
         <div class="bg-white border border-gray-200 rounded-lg shadow-sm overflow-hidden mb-4">
             <div class="p-4 sm:p-6">

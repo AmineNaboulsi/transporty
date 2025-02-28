@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('reservations', function (Blueprint $table) {
             $table->id();
             $table->foreignId("navette_id")->constrained();
+            $table->foreignId("user_id")->constrained();
             $table->string('status');
             $table->timestamps();
         });

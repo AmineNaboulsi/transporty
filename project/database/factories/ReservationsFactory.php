@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\navettes;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -19,6 +20,7 @@ class ReservationsFactory extends Factory
     {
         return [
             "navette_id" => navettes::all()->random()->id,
+            "user_id" => User::all()->random()->id,
             "status" => fake()->randomElement(["Pending", "Confirmed"])
         ];
     }
