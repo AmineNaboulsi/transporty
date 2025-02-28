@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CitysController;
 use App\Http\Controllers\PageController;
+use App\Http\Controllers\ReservationsController;
 use App\Http\Controllers\UserController;
 use App\Http\Middleware\AuthValidation;
 use Illuminate\Support\Facades\Route;
@@ -12,7 +13,9 @@ Route::get('/login', [PageController::class , "login"])->name("login");
 Route::get('/register', [PageController::class , "register"])->name("register");
 Route::get('/forget-password', [PageController::class , "forgetpassword"])->name("forgetpassword");
 Route::get('/', [PageController::class , "home"])->name('home');
-Route::get('/posts', [PageController::class , "posts"])->name('posts');
+Route::get('/posts', [PageController::class , "posts"])->name('posts.index');
+Route::get('/posts/book/{id}', [PageController::class , "book"])->name('posts.book');
+Route::get('/booking/{id}', [ReservationsController::class , "create"])->name('booking.create');
 // Route::get('/post/{id}', [PageController::class , "post"])->name('post');
 
 
@@ -40,3 +43,7 @@ Route::middleware(AuthValidation::class)->group(function(){
 Route::post('/signup', [AuthController::class , "signup"])->name("signup");
 Route::get('/getcitys', [CitysController::class , "getcitys"])->name("getcitys");
 Route::get('/getnavette', [CitysController::class , "getnavette"])->name("getcitys");
+
+Route::fallback(function() {
+    return view('404');
+});

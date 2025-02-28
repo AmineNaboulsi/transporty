@@ -117,7 +117,7 @@
                                     <span class="text-gray-600 mr-2">Seats Available:</span>
                                     <span class="font-semibold">{{ $navette->available_seats ?? rand(5, 25) }}</span>
                                 </div>
-                                <a href="" class="bg-indigo-600 border border-transparent rounded-md shadow-sm py-2 px-6 flex items-center justify-center text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                                <a href="{{route('posts.book', ['id' => $navette->id])}}" class="bg-indigo-600 border border-transparent rounded-md shadow-sm py-2 px-6 flex items-center justify-center text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
                                     Book This Navette
                                 </a>
                             </div>
@@ -127,7 +127,11 @@
             </div>
             @endforeach
         @endif
-
+        @if(session()->has('success'))
+            <div class="p-4 mb-4 text-sm text-green-800 rounded-lg bg-green-50 dark:bg-gray-800 dark:text-green-400" role="alert">
+                <span class="font-medium">Success alert!</span> {{session('success')}}
+            </div>
+        @endif
     </div>
 
 

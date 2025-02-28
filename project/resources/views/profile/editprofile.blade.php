@@ -37,7 +37,7 @@
                         <div class="sm:col-span-6">
                             <label for="first_name" class="block text-sm font-medium text-gray-700">Full name</label>
                             <div class="mt-1">
-                                <input type="text" name="first_name" id="first_name" value="{{ auth()->user()->first_name ?? old('first_name') }}" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md">
+                                <input type="text" name="first_name" id="first_name" value="{{ auth()->user()->name ?? old('first_name') }}" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md">
                             </div>
                             @error('name')
                             <p class="mt-2 text-sm text-red-600">{{ $message }}</p>

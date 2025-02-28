@@ -14,6 +14,13 @@ use function Laravel\Prompts\table;
 class PageController extends Controller
 {
 
+    /**
+     *
+     */
+    public function book($id) {
+        $navette = navettes::findOrFail($id);
+        return view('navettes.book', compact('navette'));
+    }
         /**
      *
      */

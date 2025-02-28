@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StorereservationsRequest;
 use App\Http\Requests\UpdatereservationsRequest;
 use App\Models\reservations;
+use Illuminate\Support\Facades\Auth;
 
 class ReservationsController extends Controller
 {
@@ -21,7 +22,7 @@ class ReservationsController extends Controller
      */
     public function create()
     {
-        //
+
     }
 
     /**
@@ -29,7 +30,16 @@ class ReservationsController extends Controller
      */
     public function store(StorereservationsRequest $request)
     {
-        //
+         //
+        
+        reservations::create(
+            [
+                "navette_id" => $request->id ,
+                "user_id" => Auth::user()->id ,
+                "status" => "Pending"
+            ]
+        );
+        return redirect()->back()->with('success', 'Reservation added successfully');
     }
 
     /**

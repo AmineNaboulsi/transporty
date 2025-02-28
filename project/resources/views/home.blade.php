@@ -30,7 +30,7 @@
 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
     <div class="bg-white shadow rounded-lg p-6">
         <h2 class="text-2xl font-semibold text-gray-800 mb-4">Find Your Route</h2>
-        <form action="{{route('posts')}}" class="grid grid-cols-1 md:grid-cols-4 gap-4">
+        <form action="{{route('posts.index')}}" class="grid grid-cols-1 md:grid-cols-4 gap-4">
             <div>
                 <label for="departure" class="block text-sm font-medium text-gray-700">Departure</label>
                 <select name="departure" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
