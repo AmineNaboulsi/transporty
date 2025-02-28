@@ -39,7 +39,17 @@ services:
       - postgres
     networks:
       - laravel_network
-
+  node:
+    image: node:18
+    container_name: node
+    working_dir: /var/www/html
+    volumes:
+      - ./project:/var/www/html
+    command: sh -c "npm install && npm run dev"
+    ports:
+      - "5173:5173" 
+    networks:
+      - laravel_network
 volumes:
   postgres_db:
   

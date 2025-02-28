@@ -28,18 +28,34 @@ class ReservationsController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StorereservationsRequest $request)
+    public function store(StoreReservationsRequest $request)
     {
-         //
-        
-        reservations::create(
-            [
-                "navette_id" => $request->id ,
-                "user_id" => Auth::user()->id ,
-                "status" => "Pending"
-            ]
-        );
-        return redirect()->back()->with('success', 'Reservation added successfully');
+        try {
+            $isreserved = Reservations::query()
+                ->where('navette_id', $request->id)
+                ->where('user_id', Auth::user()->id)
+                ->first();
+            if(!$isreserved){
+                $Reservations = new Reservations();
+                $Reservations->navette_id = $request->id ;
+                $Reservations->user_id =  Auth::user()->id ;
+                $Reservations->status = 'pending';
+                $Reservations->save();
+                // echo 'Réservation ajoutée avec succès';
+                return redirect()
+                    ->back()
+                    ->with('success', 'Réservation ajoutée avec succès');
+            }else{
+                return redirect()
+                ->back()
+                ->with('error', 'Navette already reserved ');
+            }
+        } catch (\Exception $e) {
+            // echo 'Erreur lors de la création de la réservation ' .$e->getMessage();
+            return redirect()
+                ->back()
+                ->with('error', 'Erreur lors de la création de la réservation');
+        }
     }
 
     /**

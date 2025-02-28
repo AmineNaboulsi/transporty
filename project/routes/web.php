@@ -15,7 +15,7 @@ Route::get('/forget-password', [PageController::class , "forgetpassword"])->name
 Route::get('/', [PageController::class , "home"])->name('home');
 Route::get('/posts', [PageController::class , "posts"])->name('posts.index');
 Route::get('/posts/book/{id}', [PageController::class , "book"])->name('posts.book');
-Route::get('/booking/{id}', [ReservationsController::class , "create"])->name('booking.create');
+Route::post('/booking/{id}', [ReservationsController::class , "store"])->name('booking.create');
 // Route::get('/post/{id}', [PageController::class , "post"])->name('post');
 
 

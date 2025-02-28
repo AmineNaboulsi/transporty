@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
+
 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-12 mt-10">
     <div class="mb-6 flex items-center">
         <a href="{{route('posts.index')}}" class="text-blue-600 hover:text-blue-800 flex items-center">
@@ -116,7 +117,7 @@
         <div class="p-6">
             <h3 class="text-lg font-medium text-gray-900 mb-4">Complete Your Booking</h3>
 
-            <form action="{{route('booking.create')}}" method="POST">
+            <form action="{{route('booking.create', ['id' => $navette->id])}}" method="POST">
                 @csrf
 
                 <div class="mt-6 bg-gray-50 p-4 rounded-md">
@@ -144,25 +145,53 @@
         </div>
     </div>
 
-    @if(session()->has('error'))
-        <div class="p-4 mt-4 text-sm text-red-800 rounded-lg bg-red-50" role="alert">
-            <span class="font-medium">Error!</span> {{session('error')}}
-        </div>
-    @endif
 </div>
 
+@if(session()->has('success') || session()->has('error'))
 <script>
-    // Update price based on number of passengers
     document.addEventListener('DOMContentLoaded', function() {
+        // Show notifications
+        @if(session()->has('success'))
+            showNotification('{{ session('success') }}', 'success');
+        @endif
+
+        @if(session()->has('error'))
+            showNotification('{{ session('error') }}', 'error');
+        @endif
+
+        // Handle passenger selection and price calculation
         const passengerSelect = document.getElementById('num_passengers');
         const totalPriceElement = document.getElementById('total-price');
         const basePrice = {{ $navette->price }};
 
-        passengerSelect.addEventListener('change', function() {
-            const numPassengers = parseInt(this.value);
-            const totalPrice = basePrice * numPassengers;
-            totalPriceElement.textContent = totalPrice + ' MAD';
-        });
+        if (passengerSelect) {
+            passengerSelect.addEventListener('change', function() {
+                const numPassengers = parseInt(this.value);
+                const totalPrice = basePrice * numPassengers;
+                totalPriceElement.textContent = totalPrice + ' MAD';
+            });
+        }
     });
+
+    function showNotification(message, type) {
+        const notification = document.createElement('div');
+        notification.className = 'fixed left-5 top-20 right-5 z-50 flex justify-center items-center';
+        
+        const content = document.createElement('div');
+        content.className = type === 'success' 
+            ? 'min-w-[250px] max-w-xs p-4 text-sm text-green-800 rounded-lg bg-green-50 dark:bg-gray-800 dark:text-green-400 shadow-lg'
+            : 'min-w-[250px] max-w-xs p-4 text-sm text-red-800 rounded-lg bg-red-50 shadow-lg';
+        
+        content.innerHTML = `<span class="font-medium">${type === 'success' ? 'Success!' : 'Error!'}</span> ${message}`;
+        
+        notification.appendChild(content);
+        document.body.appendChild(notification);
+
+        // Remove notification after 5 seconds
+        setTimeout(() => {
+            notification.remove();
+        }, 5000);
+    }
 </script>
+@endif
 @endsection
