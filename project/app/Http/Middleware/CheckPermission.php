@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Response;
 
-class AuthValidation
+class CheckPermission
 {
     /**
      * Handle an incoming request.
@@ -16,9 +16,9 @@ class AuthValidation
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if(!Auth::user()){
-            return redirect()->route('login');
-        }
+        
+        $permission = Auth::user()->role->permissions;
+        dd($permission);
         return $next($request);
     }
 }

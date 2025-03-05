@@ -150,7 +150,6 @@
 @if(session()->has('success') || session()->has('error'))
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        // Show notifications
         @if(session()->has('success'))
             showNotification('{{ session('success') }}', 'success');
         @endif
@@ -158,40 +157,27 @@
         @if(session()->has('error'))
             showNotification('{{ session('error') }}', 'error');
         @endif
-
-        // Handle passenger selection and price calculation
-        const passengerSelect = document.getElementById('num_passengers');
-        const totalPriceElement = document.getElementById('total-price');
-        const basePrice = {{ $navette->price }};
-
-        if (passengerSelect) {
-            passengerSelect.addEventListener('change', function() {
-                const numPassengers = parseInt(this.value);
-                const totalPrice = basePrice * numPassengers;
-                totalPriceElement.textContent = totalPrice + ' MAD';
-            });
-        }
     });
 
     function showNotification(message, type) {
         const notification = document.createElement('div');
         notification.className = 'fixed left-5 top-20 right-5 z-50 flex justify-center items-center';
-        
+
         const content = document.createElement('div');
-        content.className = type === 'success' 
+        content.className = type === 'success'
             ? 'min-w-[250px] max-w-xs p-4 text-sm text-green-800 rounded-lg bg-green-50 dark:bg-gray-800 dark:text-green-400 shadow-lg'
             : 'min-w-[250px] max-w-xs p-4 text-sm text-red-800 rounded-lg bg-red-50 shadow-lg';
-        
+
         content.innerHTML = `<span class="font-medium">${type === 'success' ? 'Success!' : 'Error!'}</span> ${message}`;
-        
+
         notification.appendChild(content);
         document.body.appendChild(notification);
 
-        // Remove notification after 5 seconds
         setTimeout(() => {
             notification.remove();
         }, 5000);
     }
 </script>
 @endif
+
 @endsection

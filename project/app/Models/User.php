@@ -17,6 +17,11 @@ class User extends Authenticatable
         return $this->belongsTo(roles::class);
     }
 
+    public function hasPermissionTo($permissionName)
+    {
+        return $this->permissions()->where('name', $permissionName)->exists();
+    }
+    
     /**
      * The attributes that are mass assignable.
      *

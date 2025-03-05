@@ -4,8 +4,10 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CitysController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\ReservationsController;
+use App\Http\Controllers\RolesController;
 use App\Http\Controllers\UserController;
 use App\Http\Middleware\AuthValidation;
+use App\Http\Middleware\CheckPermission;
 use Illuminate\Support\Facades\Route;
 
 //View
@@ -18,25 +20,24 @@ Route::get('/posts/book/{id}', [PageController::class , "book"])->name('posts.bo
 Route::post('/booking/{id}', [ReservationsController::class , "store"])->name('booking.create');
 // Route::get('/post/{id}', [PageController::class , "post"])->name('post');
 
-
 //Actions
 Route::post('/signin', [AuthController::class , "signin"])->name("signin");
 Route::post('/logout', [PageController::class , "logout"])->name("logout");
 
 //Route Layer
-Route::middleware(AuthValidation::class)->group(function(){
-    Route::get('/dashboard', [PageController::class , "dashboard"])->name('dashboard');
+Route::middleware([AuthValidation::class])->group(function(){
+    Route::get('/dashboard', [PageController::class , "dashboard"])->name('dashboard.index');
+    Route::get('/dashboard/roles', [PageController::class , "roles"])->name('dashboard.roles');
+    Route::post('/dashboard/role/create', [RolesController::class , "store"])->name('roles.create');
+    Route::put('/dashboard/role/edit', [RolesController::class , "edit"])->name('roles.edit');
+    Route::put('/dashboard/role/delete', [RolesController::class , "destroy"])->name('roles.destroy');
     Route::get('/profile', [PageController::class , "profile"])->name('profile.index');
     Route::get('/profile/favorite', [PageController::class , "favorite"])->name('profile.favorite');
     Route::get('/profile/payment', [PageController::class , "payment"])->name('profile.payment');
     Route::get('/profile/notification', [PageController::class , "notification"])->name('profile.notification');
     Route::get('/profile/change-password', [PageController::class , "password"])->name('profile.password');
-});
-
-//Permission Layer
-Route::middleware(AuthValidation::class)->group(function(){
     Route::get('/profile/edit', [PageController::class , "editprofile"])->name('profile.edit');
-    Route::get('/profile/edit', [PageController::class , "editprofile"])->name('profile.edit');
+    Route::get('/profile/cancelnavette/{id}', [PageController::class , "cancelnavette"])->name('cancel.navette');
 });
 
 //api

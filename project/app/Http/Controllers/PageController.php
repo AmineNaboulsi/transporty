@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\citys;
 use App\Models\navettes;
 use App\Models\reservations;
+use App\Models\roles;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -122,7 +123,31 @@ class PageController extends Controller
      *
      */
     public function dashboard() {
-        return view('dashborad.index');
+        $recentBookings = [
+            [
+                "id" => "vdqvq",
+                "name" => "vdqvq",
+                "email" => "vdqvq",
+                "cityStart" => ["name"=> "vds"],
+                "num_passengers" => 85956,
+                "total_price" => 245,
+                "status" => "Confirmed",
+            ],
+            [
+                "id" => "vd sqqcsq csqvq",
+                "name" => "v qsd sq s sqvq",
+                "email" => " sq qs   sqvq",
+                "cityStart" => ["name"=> "v s   sq qsqds"],
+                "num_passengers" => 42,
+                "total_price" => 35435,
+                "status" => "Confirmed",
+            ],
+        ];
+        return view('dashboard.index',compact("recentBookings"));
+    }
+    public function roles()  {
+        $roles = roles::all();
+        return view('dashboard.roles' , compact("roles"));
     }
 
        /**

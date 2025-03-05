@@ -52,7 +52,7 @@ class AuthController extends Controller
                 'account_type' => 'required|string|in:company,passenger'
             ]);
         } catch (ValidationException $e) {
-            $missingParams = array_keys($e->validator->failed());
+            // $missingParams = array_keys($e->validator->failed());
             return response()->json([
                 'status' => false,
                 'message' => "Missing parametres"
