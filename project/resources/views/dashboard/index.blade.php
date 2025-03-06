@@ -9,7 +9,7 @@
             <div class="flex items-start justify-between">
                 <div class="flex flex-col space-y-2">
                     <span class="text-gray-400">Total Navettes</span>
-                    <span class="text-3xl font-semibold">totalNavettes</span>
+                    <span class="text-3xl font-semibold">{{$statistics['totalNavettes']}}</span>
                 </div>
                 <div class="p-2 rounded-md bg-blue-500 text-white">
                     <svg class="w-8 h-8" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -28,7 +28,7 @@
             <div class="flex items-start justify-between">
                 <div class="flex flex-col space-y-2">
                     <span class="text-gray-400">Total Bookings</span>
-                    <span class="text-3xl font-semibold">totalBookings</span>
+                    <span class="text-3xl font-semibold">{{$statistics["totalBookings"]}}</span>
                 </div>
                 <div class="p-2 rounded-md bg-green-500 text-white">
                     <svg class="w-8 h-8" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -47,7 +47,7 @@
             <div class="flex items-start justify-between">
                 <div class="flex flex-col space-y-2">
                     <span class="text-gray-400">Total Revenue</span>
-                    <span class="text-3xl font-semibold">totalRevenue MAD</span>
+                    <span class="text-3xl font-semibold">{{$statistics['totalRevenue']}} MAD</span>
                 </div>
                 <div class="p-2 rounded-md bg-indigo-500 text-white">
                     <svg class="w-8 h-8" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -66,7 +66,7 @@
             <div class="flex items-start justify-between">
                 <div class="flex flex-col space-y-2">
                     <span class="text-gray-400">Passengers</span>
-                    <span class="text-3xl font-semibold">totalPassengers</span>
+                    <span class="text-3xl font-semibold">{{$statistics['totalPassengers']}}</span>
                 </div>
                 <div class="p-2 rounded-md bg-red-500 text-white">
                     <svg class="w-8 h-8" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">

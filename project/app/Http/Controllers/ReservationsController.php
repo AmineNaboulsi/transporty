@@ -26,6 +26,25 @@ class ReservationsController extends Controller
     }
 
     /**
+     *
+     */
+    public function cancel(reservations $reservation,$id)
+    {
+        $reservation = reservations::find($id);
+        $reservation->delete();
+        return redirect()->route('profile.index')->with('success', 'Reservation canceled successfully');
+    }
+    /**
+     *
+     */
+    public function confirm(reservations $reservation)
+    {
+        $reservation->update([
+            'status' => 'Confirmed'
+        ]);
+        return redirect()->route('booking.index')->with('success', 'Resrvation confirmed successfully');
+    }
+    /**
      * Store a newly created resource in storage.
      */
     public function store(StoreReservationsRequest $request)

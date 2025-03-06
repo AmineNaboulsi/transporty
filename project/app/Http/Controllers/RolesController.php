@@ -28,7 +28,7 @@ class RolesController extends Controller
             return explode('.', $permission->route)[0];
         });
         // dd($permissionGroups);
-        return view('dashboard.create', compact('permissionGroups'));
+        return view('dashboard.roles.create', compact('permissionGroups'));
     }
 
     /**
@@ -49,7 +49,7 @@ class RolesController extends Controller
                 $role->permissions()->attach($permission);
             }
         }
-        return redirect()->route('roles.index');
+        return redirect()->route('roles.index')->with('success', "$request->name Added successfully");;
     }
 
     /**
@@ -82,5 +82,8 @@ class RolesController extends Controller
     public function destroy(roles $roles)
     {
         //
+        $name = $roles->name;
+        $roles->delete();
+        return redirect()->back()->with('success', "$name deleted successfully");
     }
 }

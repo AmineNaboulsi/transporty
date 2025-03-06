@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('navettes', function (Blueprint $table) {
             $table->id();
-            $table->foreignId("campany_id")->constrained('campanys');
+            $table->foreignId("campany_id")->constrained('campanys')->onDelete('cascade');;
             $table->string('nom');
             $table->float('price');
             $table->date('date_navette');

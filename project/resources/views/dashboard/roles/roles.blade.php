@@ -93,4 +93,10 @@
         </div>
     </div>
 </div>
+<script src="
+https://cdn.jsdelivr.net/npm/jquery-toast-plugin@1.3.2/dist/jquery.toast.min.js
+"></script>
+<link href="
+https://cdn.jsdelivr.net/npm/jquery-toast-plugin@1.3.2/dist/jquery.toast.min.css
+" rel="stylesheet">
 @endsection

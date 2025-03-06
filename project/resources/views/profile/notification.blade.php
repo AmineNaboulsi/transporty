@@ -11,10 +11,10 @@
             <a  href="{{route('profile.favorite')}}"  class="py-4 px-6 border-b-2 border-transparent font-medium text-gray-600 hover:text-gray-900 hover:border-gray-300 whitespace-nowrap">
                 Favorite Routes
             </a>
-            <a  href="{{route('profile.payment')}}"  class="py-4 px-6 border-b-2 border-indigo-500 font-medium text-indigo-600 whitespace-nowrap">
+            <a  href="{{route('profile.payment')}}" class="py-4 px-6 border-b-2 border-transparent font-medium text-gray-600 hover:text-gray-900 hover:border-gray-300 whitespace-nowrap">
                 Payment History
             </a>
-            <a  href="{{route('profile.notification')}}" class="py-4 px-6 border-b-2 border-transparent font-medium text-gray-600 hover:text-gray-900 hover:border-gray-300 whitespace-nowrap">
+            <a  href="{{route('profile.notification')}}"  class="py-4 px-6 border-b-2 border-indigo-500 font-medium text-indigo-600 whitespace-nowrap">
                 Notifications
             </a>
         </div>

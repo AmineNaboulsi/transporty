@@ -145,10 +145,13 @@
                             View Details
                         </a>
                         @if($reservation->status != 'Confirmed')
-                            <a href="{{route('cancel.navette' , ['id' => $reservation->id])}}" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">
-                                Cancel
-                            </a>
-                        @endif
+                        <span >
+                            <form action="{{ route('booking.cancel', $reservation->id) }}" method="POST">
+                                @csrf
+                                <input type="submit" value="Cancel" class="cursor-pointer w-20 px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-red-600 hover:bg-red-700  focus:ring-red-500" />
+                                @endif
+                            </form>
+                        </span>
                     </div>
                 </div>
             </div>

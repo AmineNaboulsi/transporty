@@ -10,6 +10,11 @@ class navettes extends Model
     /** @use HasFactory<\Database\Factories\NavettesFactory> */
     use HasFactory;
 
+    public function tags()
+    {
+        return $this->belongsToMany(Tag::class, 'navette_tags', 'navette_id', 'tag_id');
+    }
+
     protected $fillable = [
         'campany_id',
         'nom',

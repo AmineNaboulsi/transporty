@@ -43,7 +43,7 @@
                         @else
                             <div class="ml-3 relative">
                                 <div class="relative">
-                                    <button id="seemenu"  type="button" class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition">
+                                    <div id="seemenu" class="cursor-pointer inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition">
                                         {{ Auth::user()->name }}
                                         <svg  class="ml-2 -mr-0.5 h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
                                             <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
@@ -58,11 +58,17 @@
                                                     Dashboard
                                                 </a>
                                             @endif
-                                            <a href="{{route('logout')}}" class="block pl-3 pr-4 py-2 border-l-4 border-transparent text-base font-medium text-gray-600 transition">
-                                                Logout
-                                            </a>
+
+                                            <div class="cursor-pointer block pl-3 pr-4 py-2 border-l-4 border-transparent text-base font-medium text-gray-600 transition">
+                                                <form method="POST" action="{{route('logout')}}">
+                                                    @csrf
+                                                    <button type="submit">
+                                                        Logout
+                                                    </button>
+                                                </form>
+                                            </div>
                                         </div>
-                                    </button>
+                                    </div>
                                 </div>
 
                             </div>

@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StorenavettesRequest;
-use App\Http\Requests\UpdatenavettesRequest;
-use App\Models\navettes;
+use App\Models\Tag;
+use App\Http\Requests\StoreTagRequest;
+use App\Http\Requests\UpdateTagRequest;
 
-class NavettesController extends Controller
+class TagController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -27,15 +27,20 @@ class NavettesController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StorenavettesRequest $request)
+    public function store(StoreTagRequest $request)
     {
-        //
+        $tag = $request->validate([
+            "name" => 'required',
+            "color" => 'required',
+        ]);
+        Tag::create($tag);
+        return redirect()->route('tags.index')->with("success", "Tag created successfully");
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(navettes $navettes)
+    public function show(Tag $tag)
     {
         //
     }
@@ -43,7 +48,7 @@ class NavettesController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(navettes $navettes)
+    public function edit(Tag $tag)
     {
         //
     }
@@ -51,15 +56,17 @@ class NavettesController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdatenavettesRequest $request, navettes $navettes)
+    public function update(UpdateTagRequest $request, Tag $tag)
     {
+        //
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(navettes $navettes)
+    public function destroy(Tag $tag)
     {
         //
+        dd($tag);
     }
 }

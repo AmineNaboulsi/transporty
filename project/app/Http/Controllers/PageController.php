@@ -7,6 +7,8 @@ use App\Models\navettes;
 use App\Models\permission;
 use App\Models\reservations;
 use App\Models\roles;
+use App\Models\Tag;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -17,6 +19,29 @@ use function Laravel\Prompts\table;
 class PageController extends Controller
 {
 
+
+     /**
+     *
+     */
+    public function tags() {
+        $tags = Tag::withCount('navettes')->paginate(10);
+        $tagsCount = Tag::count();
+        return view('dashboard.tags.index',compact("tags","tagsCount"));
+    }
+    /**
+     *
+     */
+    public function navettes() {
+        return view('dashboard.navettes.index');
+    }
+    /**
+     *
+     */
+    public function booking() {
+        $reservations = reservations::with(['navette', 'user'])
+            ->paginate(7);
+        return view('dashboard.booking.index', compact('reservations'));
+    }
     /**
      *
      */
@@ -86,7 +111,14 @@ class PageController extends Controller
         return view('navettes.index', compact('navettes', 'departure', 'destination', 'date'));
     }
 
-        /**
+    /**
+    *
+    */
+    public function roles()  {
+        $roles = roles::all();
+        return view('dashboard.roles.roles' , compact("roles"));
+    }
+    /**
      *
      */
     public function register() {
@@ -104,9 +136,9 @@ class PageController extends Controller
      */
     public function logout() {
         Auth::logout();
-        return view('auth.login');
+        return redirect()->route('login');
     }
-        /**
+    /**
      *
      */
     public function home() {
@@ -125,6 +157,14 @@ class PageController extends Controller
      *
      */
     public function dashboard() {
+        $statistics = [
+            "totalNavettes" => 100,
+            "totalBookings" => 100,
+            "totalRevenue" => 1000,
+            "totalPassengers" => 100,
+            "totalCompanies" => 100,
+        ];
+
         $recentBookings = [
             [
                 "id" => "vdqvq",
@@ -139,30 +179,26 @@ class PageController extends Controller
                 "id" => "vd sqqcsq csqvq",
                 "name" => "v qsd sq s sqvq",
                 "email" => " sq qs   sqvq",
-                "cityStart" => ["name"=> "v s   sq qsqds"],
+                "cityStart" => ["name"=> "v sq qsqds"],
                 "num_passengers" => 42,
                 "total_price" => 35435,
                 "status" => "Confirmed",
             ],
         ];
-        return view('dashboard.index',compact("recentBookings"));
-    }
-    public function roles()  {
-        $roles = roles::all();
-        return view('dashboard.roles' , compact("roles"));
+        return view('dashboard.index',compact("recentBookings","statistics"));
     }
 
-       /**
-     *
-     */
+    /**
+    *
+    */
     public function password() {
         return view('profile.password');
     }
-      /**
-     *
-     */
+
+    /**
+    *
+    */
     public function profile() {
-        // $upcomingReservations  = reservations::all();
         $upcomingReservations  = DB::table('reservations')
             ->join('navettes', 'reservations.navette_id', '=', 'navettes.id')
             ->join('campanys', 'campanys.id', '=', 'navettes.campany_id')
@@ -171,14 +207,19 @@ class PageController extends Controller
             ->join('citys as ce', 'ce.id', '=', 'navettes.city_arrive')
             ->select(
                 'reservations.*',
-                'navettes.*',
+                'navettes.campany_id',
+                'navettes.nom',
+                'navettes.price',
+                'navettes.date_navette',
+                'navettes.description',
+                'navettes.type_vehicule',
+                'navettes.places_disponible',
                 'cs.name as start_city',
                 'ce.name as end_city',
                 'ce.region as start_city_region'
             )
             ->where('users.id' , '=' , Auth::user()->id)
             ->paginate(5);
-        // return response()->json($upcomingReservations);
         return view('profile.index',compact("upcomingReservations"));
     }
 
