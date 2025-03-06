@@ -27,7 +27,6 @@
             >
                 @csrf
                 <div class="space-y-6">
-                    {{-- Role Name Input --}}
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-2" for="role_name">
                             Role Name
@@ -46,7 +45,6 @@
                         @enderror
                     </div>
 
-                    {{-- Permissions Section --}}
                     <div>
                         <div class="bg-gray-50 border border-gray-200 rounded-md p-6">
                             <div class="flex justify-between items-center mb-6">

@@ -17,34 +17,6 @@ use function Laravel\Prompts\table;
 class PageController extends Controller
 {
 
-     /**
-     *
-     */
-    public function test() {
-        $excludedRoutes = ['login', 'register', 'forgetpassword', 'signin', 'signup', 'posts.book', 'posts.index', 'home','logout'];
-
-        $routes = collect(Route::getRoutes())->filter(function ($route) use ($excludedRoutes) {
-            return $route->getName() && !in_array($route->getName(), $excludedRoutes);
-        });
-
-        $permissions = [];
-
-
-        foreach ($routes as $route) {
-            if ($name = $route->getName()) {
-                $permissions[] = [
-                    'name' => $this->generatePermissionName($name),
-                    'route' => $name,
-                ];
-            }
-        }
-
-        dd($permissions);
-        foreach ($permissions as $perm) {
-            permission::firstOrCreate($perm);
-        }
-
-    }
     /**
      *
      */

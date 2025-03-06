@@ -36,7 +36,20 @@ class RolesController extends Controller
      */
     public function store(StorerolesRequest $request)
     {
-        //
+        $validatepermissions = $request->validate([
+            'name' => 'required|string',
+            'permissions' => 'required|array',
+            'permissions.*' => 'exists:permissions,id'
+        ]);
+        if($validatepermissions){
+            $role = roles::create([
+                "name" => $request->name
+            ]);
+            foreach($request->permissions as $permission){
+                $role->permissions()->attach($permission);
+            }
+        }
+        return redirect()->route('roles.index');
     }
 
     /**
