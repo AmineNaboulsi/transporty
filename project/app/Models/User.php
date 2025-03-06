@@ -12,16 +12,19 @@ class User extends Authenticatable
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable;
 
-
     public function role(){
         return $this->belongsTo(roles::class);
     }
-
-    public function hasPermissionTo($permissionName)
+    public function Permissions()
     {
-        return $this->permissions()->where('name', $permissionName)->exists();
+        return $this->role->permissions;
     }
-    
+    public function hasPermissionTo($routeName)
+    {
+        return $this->role && $this->role->hasPermissionTo($routeName);
+    }
+
+
     /**
      * The attributes that are mass assignable.
      *

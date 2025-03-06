@@ -25,30 +25,23 @@ class RolespermissionsSeeder extends Seeder
         foreach ($roles as $roleName) {
             $role = roles::firstOrCreate(['name' => $roleName]);
 
-            $permissions = Permission::whereIn('route', [
-                'login',
-                'register',
-                'forgetpassword',
-                'home',
-                'posts.index',
-                'posts.book',
-                'booking.create',
-                'signin',
-                'logout',
-                'dashboard.index',
-                'profile.index',
-                'profile.favorite',
-                'profile.payment'
-            ])->get();
+            $permissions = Permission::all();
 
             if ($role->name == 'admin') {
                 $role->permissions()->sync($permissions->pluck('id')->toArray());
             }
             if ($role->name == 'client') {
-                $role->permissions()->sync($permissions->whereIn('route', ['login', 'home', 'profile.index'])->pluck('id')->toArray());
+                $role->permissions()->sync($permissions->whereIn('route',
+                ['home', 'profile.index','posts.book','booking.reservation',
+                'profile.index','profile.favorite','profile.payment',
+                'profile.notification','profile.password','profile.edit','cancel.navette',
+                ])->pluck('id')->toArray());
             }
             if ($role->name == 'company') {
-                $role->permissions()->sync($permissions->whereIn('route', ['home', 'dashboard.index', 'profile.index'])->pluck('id')->toArray());
+                $role->permissions()->sync($permissions->whereIn('route',
+                ['home', 'dashboard.index', 'profile.index',
+                'dashboard.roles','roles.create','roles.store',
+                'roles.edit','roles.destroy'])->pluck('id')->toArray());
             }
             if ($role->name == 'viewer') {
                 $role->permissions()->sync($permissions->whereIn('route', ['home', 'profile.index'])->pluck('id')->toArray());

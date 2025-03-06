@@ -21,7 +21,7 @@ class CitysController extends Controller
     {
         //
         $citys = citys::select('id', 'name')->get();
-        return json_encode($citys);
+        return response()->json($citys);
     }
 
     /**

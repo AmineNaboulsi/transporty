@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StorerolesRequest;
 use App\Http\Requests\UpdaterolesRequest;
+use App\Models\permission;
 use App\Models\roles;
 
 class RolesController extends Controller
@@ -22,6 +23,12 @@ class RolesController extends Controller
     public function create()
     {
         //
+        $permissions = permission::all();
+        $permissionGroups = $permissions->groupBy(function($permission) {
+            return explode('.', $permission->route)[0];
+        });
+        // dd($permissionGroups);
+        return view('dashboard.create', compact('permissionGroups'));
     }
 
     /**

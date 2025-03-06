@@ -18,4 +18,9 @@ class roles extends Model
     {
         return $this->hasMany(User::class);
     }
+
+    public function hasPermissionTo($routeName)
+    {
+        return $this->permissions()->where('route', $routeName)->exists();
+    }
 }

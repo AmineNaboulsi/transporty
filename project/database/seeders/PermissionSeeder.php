@@ -13,41 +13,50 @@ class PermissionSeeder extends Seeder
      */
     public function run(): void
     {
-        $routes = Route::getRoutes();
+        // $excludedRoutes = ['login', 'register', 'forgetpassword', 'signin', 'signup', 'posts.book', 'posts.index', 'home'];
+
+        // $routes = collect(Route::getRoutes())->filter(function ($route) use ($excludedRoutes) {
+        //     return $route->getName() && !in_array($route->getName(), $excludedRoutes);
+        // });
+
+
+        // foreach ($routes as $route) {
+        //     Permission::firstOrCreate([
+        //         'name' => $route->getName(),
+        //         'route' => $route->getName(),
+        //     ]);
+        // }
+
+        $excludedRoutes = ['login', 'register', 'forgetpassword', 'signin', 'signup', 'posts.book', 'posts.index', 'home','storage.local'];
+
+        $routes = collect(Route::getRoutes())->filter(function ($route) use ($excludedRoutes) {
+            return $route->getName() && !in_array($route->getName(), $excludedRoutes);
+        });
+
+        // $routes = Route::getRoutes();
+        $permissions = [];
 
         foreach ($routes as $route) {
-            $name = $route->getName();
-            $methods = $route->methods();
-
-            if ($name) {
-                foreach ($methods as $method) {
-                    $method !== 'HEAD' &&
-                    Permission::firstOrCreate([
-                        'name' => "{$name}_{$method}",
-                        'route' => $name,
-                        'method' => $method,
-                    ]);
-                }
+            if ($name = $route->getName()) {
+                $permissions[] = [
+                    'name' => $this->generatePermissionName($name),
+                    'route' => $name,
+                ];
             }
         }
 
-        // $permissions = [
-        //     //User
-        //     'view_users',
-        //     'create_users',
-        //     'edit_users',
-        //     'delete_users',
-        //     //Navette
-        //     'view_navette',
-        //     'create_navette',
-        //     'edit_navette',
-        //     'delete_navette',
-        //     //
-        //     'make_reservation',
-        // ];
+        foreach ($permissions as $perm) {
+            Permission::firstOrCreate($perm);
+        }
+    }
 
-        // foreach ($permissions as $permission) {
-        //     permission::create(['name' => $permission]);
-        // }
+    private function generatePermissionName($routeName)
+    {
+        // Convert 'roles.create' to 'Create Role'
+        $parts = explode('.', $routeName);
+        $action = ucfirst(array_pop($parts)); // Last part (create, view, edit)
+        $resource = ucfirst(implode(' ', $parts)); // Remaining parts
+        $action = strtolower($action) !== 'index' ? $action : 'View';
+        return "{$action} {$resource}";
     }
 }

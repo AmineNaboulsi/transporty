@@ -4,17 +4,47 @@ namespace App\Http\Controllers;
 
 use App\Models\citys;
 use App\Models\navettes;
+use App\Models\permission;
 use App\Models\reservations;
 use App\Models\roles;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Route;
 
 use function Laravel\Prompts\table;
 
 class PageController extends Controller
 {
 
+     /**
+     *
+     */
+    public function test() {
+        $excludedRoutes = ['login', 'register', 'forgetpassword', 'signin', 'signup', 'posts.book', 'posts.index', 'home','logout'];
+
+        $routes = collect(Route::getRoutes())->filter(function ($route) use ($excludedRoutes) {
+            return $route->getName() && !in_array($route->getName(), $excludedRoutes);
+        });
+
+        $permissions = [];
+
+
+        foreach ($routes as $route) {
+            if ($name = $route->getName()) {
+                $permissions[] = [
+                    'name' => $this->generatePermissionName($name),
+                    'route' => $name,
+                ];
+            }
+        }
+
+        dd($permissions);
+        foreach ($permissions as $perm) {
+            permission::firstOrCreate($perm);
+        }
+
+    }
     /**
      *
      */
