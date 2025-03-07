@@ -17,11 +17,11 @@ class CheckPermission
     public function handle(Request $request, Closure $next): Response
     {
         // $user = Auth::user();
-        // $routeName = $request->route()->getName();
-        // // dd($user->role->permissions);
-        // if (!$user || !$routeName || !$user->hasPermissionTo($routeName)) {
-        //     abort(403, 'Unauthorized');
+        // $routeName = $request->route()->getAction('as');
+        // if ($user->role->name == 'admin' || $user->role->hasPermissionTo($routeName)) {
+        //     return $next($request);
         // }
+        // abort(403, 'Unauthorized');
         return $next($request);
     }
 }

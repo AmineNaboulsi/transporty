@@ -28,7 +28,6 @@ class User extends Authenticatable
         return $this->role && $this->role->hasPermissionTo($routeName);
     }
 
-
     /**
      * The attributes that are mass assignable.
      *

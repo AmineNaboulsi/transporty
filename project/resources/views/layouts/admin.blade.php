@@ -42,24 +42,14 @@
             :class="{'translate-x-0': sidebarOpen, '-translate-x-full': !sidebarOpen}"
             class="fixed inset-y-0 left-0 z-30 w-64 overflow-y-auto transition-all duration-300 transform bg-gradient-to-br from-blue-700 to-indigo-800 shadow-xl lg:translate-x-0 lg:static lg:inset-0"
         >
-            <!-- Sidebar header -->
-            <div class="flex items-center justify-center h-16 p-4 border-b border-blue-800">
-                <div class="flex items-center space-x-2">
-                    <i class="fas fa-shuttle-van text-white text-2xl"></i>
-                    <span class="text-xl font-bold text-white">Transporty</span>
-                </div>
-            </div>
 
-            <!-- User info -->
-            <div class="flex flex-col items-center mt-6 mb-6">
-                <div class="relative w-20 h-20 overflow-hidden bg-gray-200 rounded-full">
-                    <svg class="absolute w-20 h-20 text-gray-500" fill="currentColor" viewBox="0 0 24 24">
-                        <path d="M24 20.993V24H0v-2.996A14.977 14.977 0 0112.004 15c4.904 0 9.26 2.354 11.996 5.993zM16.002 8.999a4 4 0 11-8 0 4 4 0 018 0z" />
-                    </svg>
-                </div>
-                <h5 class="mt-2 text-lg font-medium text-white">{{ Auth::user()->name }}</h5>
-                <span class="text-sm font-medium text-blue-200">{{ Auth::user()->role->name }}</span>
-            </div>
+  <!-- Sidebar header -->
+  <div class="flex items-center justify-center h-16 p-4 border-b border-blue-800">
+    <div class="flex items-center space-x-2">
+        <i class="fas fa-shuttle-van text-white text-2xl"></i>
+        <span class="text-xl font-bold text-white">Transporty</span>
+    </div>
+</div>
 
             <!-- Sidebar navigation -->
             <nav class="px-4 mt-2 space-y-1">
@@ -69,7 +59,7 @@
                 <div class="border-b border-blue-800 pb-2 mb-4">
                     <p class="text-xs font-semibold text-blue-300 uppercase tracking-wider mb-2">Main</p>
 
-                    <a href="{{ route('dashboard') }}" class="flex items-center px-4 py-3 text-white transition-colors rounded-lg hover:bg-blue-600 group">
+                    <a href="{{ route('dashboard.index') }}" class="flex items-center px-4 py-3 text-white transition-colors rounded-lg hover:bg-blue-600 group">
                         <i class="fas fa-tachometer-alt w-5 h-5 mr-3"></i>
                         <span>Dashboard</span>
                     </a>
@@ -81,6 +71,10 @@
                     <a href="{{ route('roles.index') }}" class="flex items-center px-4 py-3 text-white transition-colors rounded-lg hover:bg-blue-600">
                         <i class="fas fa-user-shield w-5 h-5 mr-3"></i>
                         <span>Manage Roles</span>
+                    </a>
+                    <a href="{{ route('users.index') }}" class="flex items-center px-4 py-3 text-white transition-colors rounded-lg hover:bg-blue-600">
+                        <i class="fas fa-user-shield w-5 h-5 mr-3"></i>
+                        <span>Manage users role</span>
                     </a>
 
                     <div x-data="{ open: false }" class="relative">

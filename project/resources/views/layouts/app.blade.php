@@ -49,13 +49,13 @@
                                             <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
                                         </svg>
                                         <div id="profilmenu" class="absolute bg-white border-[1px] w-48 bordr-black top-6 right-6 rounded-xl hidden mt-3">
-                                            @if(Auth::user()->role_id == 3)
+                                            @if(Auth::user()->role->name == 'admin' || Auth::user()->role->hasPermissionTo('dashboard.index'))
+                                                <a href="{{route('dashboard.index')}}" class="block pl-3 pr-4 py-2 border-l-4 border-transparent text-base font-medium text-gray-600 transition">
+                                                    Dashboard
+                                                </a>
+                                            @elseif(Auth::user()->role->hasPermissionTo('profile.index'))
                                                 <a href="{{route('profile.index')}}" class="block pl-3 pr-4 py-2 border-l-4 border-transparent text-base font-medium text-gray-600 transition">
                                                     Profile
-                                                </a>
-                                            @else
-                                                <a href="{{route('dashboard')}}" class="block pl-3 pr-4 py-2 border-l-4 border-transparent text-base font-medium text-gray-600 transition">
-                                                    Dashboard
                                                 </a>
                                             @endif
 

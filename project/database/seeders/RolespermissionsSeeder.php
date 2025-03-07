@@ -32,16 +32,16 @@ class RolespermissionsSeeder extends Seeder
             }
             if ($role->name == 'client') {
                 $role->permissions()->sync($permissions->whereIn('route',
-                ['home', 'profile.index','posts.book','booking.reservation',
-                'profile.index','profile.favorite','profile.payment',
-                'profile.notification','profile.password','profile.edit','cancel.navette',
+                ['home', 'profile.index','posts.book','booking.reservation','booking.index',
+                'profile.reservations','profile.favorite','profile.payment',
+                'profile.notification','profile.password','profile.edit','cancel.navette','booking.cancel'
                 ])->pluck('id')->toArray());
             }
             if ($role->name == 'company') {
                 $role->permissions()->sync($permissions->whereIn('route',
-                ['home', 'dashboard.index', 'profile.index',
-                'dashboard.roles','roles.create','roles.store',
-                'roles.edit','roles.destroy'])->pluck('id')->toArray());
+                ['home', 'dashboard.index',
+                'navettes.index','navettes.create','navettes.store',
+                ])->pluck('id')->toArray());
             }
             if ($role->name == 'viewer') {
                 $role->permissions()->sync($permissions->whereIn('route', ['home', 'profile.index'])->pluck('id')->toArray());

@@ -22,6 +22,6 @@ class roles extends Model
 
     public function hasPermissionTo($routeName)
     {
-        return $this->permissions()->where('route', $routeName)->exists();
+        return $this->permissions()->where('route','=', $routeName)->exists();
     }
 }

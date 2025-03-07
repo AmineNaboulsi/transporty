@@ -29,10 +29,17 @@ Route::post('/signin', [AuthController::class , "signin"])->name("signin");
 Route::post('/logout', [PageController::class , "logout"])->name("logout");
 
 //Route Layer
-Route::middleware([AuthValidation::class])->group(function(){
+Route::middleware([AuthValidation::class , CheckPermission::class])->group(function(){
 
     //dashborad
-    Route::get('/dashboard', [PageController::class, "dashboard"])->name('dashboard');
+    Route::get('/dashboard', [PageController::class, "dashboard"])->name('dashboard.index');
+
+    //users
+    Route::prefix('dashboard/users')->middleware('CheckPermission')->group(function () {
+        Route::get('/', [PageController::class, "users"])->name('users.index');
+        //api
+        Route::patch('/assign-role', [UserController::class, "assignrole"]);
+    });
 
     //Roles
     Route::prefix('dashboard/role')->middleware('CheckPermission')->group(function () {
@@ -49,9 +56,12 @@ Route::middleware([AuthValidation::class])->group(function(){
         Route::get('/', [PageController::class, "navettes"])->name('navettes.index');
         Route::get('/create', [NavettesController::class, "create"])->name('navettes.create');
         Route::post('/store', [NavettesController::class, "store"])->name('navettes.store');
+        Route::get('/edit/{id}', [NavettesController::class, "edit"])->name('navettes.edit');
+        Route::put('/update/{navettes:id}', [NavettesController::class, "update"])->name('navettes.update');
+        Route::delete('/destroy/{navettes:id}', [NavettesController::class, "destroy"])->name('navettes.destroy');
     });
 
-    //navettes
+    //tags
     Route::prefix('dashboard/tags')->middleware('CheckPermission')->group(function () {
         Route::get('/', [PageController::class, "tags"])->name('tags.index');
         Route::post('/store', [TagController::class, "store"])->name('tags.store');

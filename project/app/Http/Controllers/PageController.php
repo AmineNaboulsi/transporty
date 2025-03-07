@@ -19,6 +19,14 @@ use function Laravel\Prompts\table;
 class PageController extends Controller
 {
 
+    /**
+     *
+     */
+    public function users() {
+        $users = User::query()->with('role')->paginate(10);
+        $roles = roles::all();
+        return view('dashboard.users.index',compact("users","roles"));
+    }
 
      /**
      *
@@ -116,7 +124,7 @@ class PageController extends Controller
     *
     */
     public function roles()  {
-        $roles = roles::all();
+        $roles = roles::with('permissions')->paginate(10);
         return view('dashboard.roles.roles' , compact("roles"));
     }
     /**

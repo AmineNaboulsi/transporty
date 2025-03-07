@@ -63,7 +63,9 @@
 </section>
 
 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-    <h2 class="text-2xl font-bold text-gray-900 mb-6">Popular Routes</h2>
+    @if(count($navettes)>0)
+            <h2 class="text-2xl font-bold text-gray-900 mb-6">Popular Routes</h2>
+    @endif
     <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
         @foreach($navettes as $navette)
         <div class=" bg-white shadow rounded-lg overflow-hidden">

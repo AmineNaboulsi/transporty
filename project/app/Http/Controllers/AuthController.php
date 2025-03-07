@@ -80,10 +80,12 @@ class AuthController extends Controller
             'password' => Hash::make($validatedData['password']),
             'role_id' => $role->id
         ]);
-        $company = campanys::create([
-            'name' => $validatedData['name'],
-            'user_id' => $user->id
-        ]);
+        if($validatedData['account_type'] == 'company'){
+            $company = campanys::create([
+                'name' => $validatedData['name'],
+                'user_id' => $user->id
+            ]);
+        }
 
         if ($user && $company) {
             session()->put('id', $user->id);

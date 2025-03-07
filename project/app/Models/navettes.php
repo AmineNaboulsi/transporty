@@ -14,7 +14,6 @@ class navettes extends Model
     {
         return $this->belongsToMany(Tag::class, 'navette_tags', 'navette_id', 'tag_id');
     }
-
     protected $fillable = [
         'campany_id',
         'nom',
@@ -29,7 +28,7 @@ class navettes extends Model
         "time_end",
         "time_end"
     ];
-   
+
     public function company()
     {
         return $this->belongsTo(campanys::class);
@@ -44,4 +43,6 @@ class navettes extends Model
     {
         return $this->belongsTo(citys::class, 'city_arrive');
     }
+
+
 }
