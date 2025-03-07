@@ -46,8 +46,8 @@ Route::middleware([AuthValidation::class , CheckPermission::class])->group(funct
         Route::get('/', [PageController::class, "roles"])->name('roles.index');
         Route::get('/create', [RolesController::class, "create"])->name('roles.create');
         Route::post('/store', [RolesController::class, "store"])->name('roles.store');
-        Route::get('/edit/{roles:id}', [RolesController::class, "edit"])->name('roles.edit');
-        Route::post('/update', [RolesController::class, "update"])->name('roles.edit');
+        Route::get('/edit/{role:id}', [RolesController::class, "edit"])->name('roles.edit');
+        Route::put('/update/{role:id}', [RolesController::class, "update"])->name('roles.update');
         Route::delete('/delete/{roles:id}', [RolesController::class, "destroy"])->name('roles.destroy');
     });
 

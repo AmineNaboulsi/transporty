@@ -108,7 +108,33 @@ class PageController extends Controller
             });
         }
 
-        if (!empty($date)) {
+        if (!empty($date)) {  $query = navettes::query();
+
+            $departure = request()?->departure;
+            $destination = request()?->destination;
+            $date = request()?->date;
+
+            if (!empty($departure)) {
+                $query->where(function($q) use ($departure) {
+                    $q->where('city_arrive', '=', $departure)
+                      ->orWhere('city_start', 'LIKE', "%{$departure}%");
+                });
+            }
+
+            if (!empty($destination)) {
+                $query->where(function($q) use ($destination) {
+                    $q->where('city_start', '=', $destination)
+                      ->orWhere('city_arrive', 'LIKE', "%{$destination}%");
+                });
+            }
+
+            if (!empty($date)) {
+                $query->whereDate('date_navette', $date);
+            }
+
+            $navettes = $query->with('tags')->get();
+
+            return view('navettes.index', compact('navettes', 'departure', 'destination', 'date'));
             $query->whereDate('date_navette', $date);
         }
 
@@ -167,33 +193,40 @@ class PageController extends Controller
      */
     public function dashboard() {
         $statistics = [
-            "totalNavettes" => 100,
-            "totalBookings" => 100,
-            "totalRevenue" => 1000,
-            "totalPassengers" => 100,
-            "totalCompanies" => 100,
+            "totalNavettes" => navettes::count(),
+            "totalBookings" => reservations::count(),
+            "totalRevenue" => reservations::with('navette')->get()->sum('navette.price'),
+            "totalPassengers" => User::where('role_id', roles::where('name', 'client')->first()->id)->count(),
+            "totalCompanies" => User::where('role_id', roles::where('name', 'company')->first()->id)->count(),
+            "navetteGrowth" => '--',
+            "bookingGrowth" => '--',
+            "revenueGrowth" => '--',
+            "passengerGrowth" => '--',
         ];
 
-        $recentBookings = [
-            [
-                "id" => "vdqvq",
-                "name" => "vdqvq",
-                "email" => "vdqvq",
-                "cityStart" => ["name"=> "vds"],
-                "num_passengers" => 85956,
-                "total_price" => 245,
-                "status" => "Confirmed",
-            ],
-            [
-                "id" => "vd sqqcsq csqvq",
-                "name" => "v qsd sq s sqvq",
-                "email" => " sq qs   sqvq",
-                "cityStart" => ["name"=> "v sq qsqds"],
-                "num_passengers" => 42,
-                "total_price" => 35435,
-                "status" => "Confirmed",
-            ],
-        ];
+        // $recentBookings = [
+        //     [
+        //         "id" => "vdqvq",
+        //         "name" => "vdqvq",
+        //         "email" => "vdqvq",
+        //         "cityStart" => ["name"=> "vds"],
+        //         "num_passengers" => 85956,
+        //         "total_price" => 245,
+        //         "status" => "Confirmed",
+        //     ],
+        //     [
+        //         "id" => "vd sqqcsq csqvq",
+        //         "name" => "v qsd sq s sqvq",
+        //         "email" => " sq qs   sqvq",
+        //         "cityStart" => ["name"=> "v sq qsqds"],
+        //         "num_passengers" => 42,
+        //         "total_price" => 35435,
+        //         "status" => "Confirmed",
+        //     ],
+        // ];
+        $recentBookings = reservations::with(['navette', 'user'])
+        ->take(2)
+        ->get();
         return view('dashboard.index',compact("recentBookings","statistics"));
     }
 

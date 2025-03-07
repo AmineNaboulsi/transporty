@@ -4,7 +4,7 @@
 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
     <div class="bg-white rounded-lg shadow-md overflow-hidden">
         <div class="px-4 py-5 sm:px-6 border-b border-gray-200">
-            <h4 class="text-lg font-medium text-gray-900">Add New Navette</h4>
+            <h4 class="text-lg font-medium text-gray-900">Update Navette</h4>
         </div>
         <div class="px-4 py-5 sm:p-6">
             <form action="{{route('navettes.update',$navettes->id)}}" method="POST">
@@ -117,15 +117,16 @@
                         <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                     @enderror
                 </div>
-
-                <div class="mt-6 flex items-center space-x-4">
-                    <button type="submit" class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                        Save Changes
-                    </button>
-                    <a href="" onclick="event.preventDefault(); window.history.back();" class="inline-flex justify-center py-2 px-4 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                        Cancel
-                    </a>
-                </div>
+                @if(Auth::user()->role->name !== "admin")
+                    <div class="mt-6 flex items-center space-x-4">
+                        <button type="submit" class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                            Save Changes
+                        </button>
+                        <a href="" onclick="event.preventDefault(); window.history.back();" class="inline-flex justify-center py-2 px-4 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                            Cancel
+                        </a>
+                    </div>
+                @endif
             </form>
         </div>
     </div>

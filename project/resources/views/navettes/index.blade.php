@@ -75,41 +75,14 @@
                             </div>
 
                             <div class="flex flex-wrap gap-2 mb-4">
-                                @if($navette->hasWifi ?? true)
-                                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                                @foreach ($navette->tags as $tag)
+                                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-{{strtolower($tag->color)}}-100 text-{{strtolower($tag ->color)}}-800">
                                     <svg class="h-3 w-3 mr-1" fill="currentColor" viewBox="0 0 24 24">
                                         <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
                                     </svg>
-                                    Wi-Fi
+                                    {{$tag->name}}
                                 </span>
-                                @endif
-
-                                @if($navette->hasAC ?? true)
-                                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
-                                    <svg class="h-3 w-3 mr-1" fill="currentColor" viewBox="0 0 24 24">
-                                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
-                                    </svg>
-                                    Air Conditioning
-                                </span>
-                                @endif
-
-                                @if($navette->hasPower ?? true)
-                                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
-                                    <svg class="h-3 w-3 mr-1" fill="currentColor" viewBox="0 0 24 24">
-                                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
-                                    </svg>
-                                    Power Outlets
-                                </span>
-                                @endif
-
-                                @if($navette->hasWater ?? false)
-                                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
-                                    <svg class="h-3 w-3 mr-1" fill="currentColor" viewBox="0 0 24 24">
-                                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
-                                    </svg>
-                                    Complimentary Water
-                                </span>
-                                @endif
+                                @endforeach
                             </div>
 
                             <div class="mt-4 flex flex-col sm:flex-row sm:justify-between sm:items-center">

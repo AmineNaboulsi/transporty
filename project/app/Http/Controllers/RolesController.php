@@ -63,17 +63,25 @@ class RolesController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(roles $roles)
+    public function edit(roles $role)
     {
-        //
+        $permissions = permission::all();
+        $permissionGroups = $permissions->groupBy(function($permission) use ($role) {
+            $permission->checked = $role->permissions->contains($permission->id);
+            return explode('.', $permission->route)[0];
+        });
+        $permissionsallowesTo = $role->permissions;
+        return view('dashboard.roles.edit', compact('role','permissionGroups','permissionsallowesTo'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdaterolesRequest $request, roles $roles)
+    public function update(UpdaterolesRequest $request, roles $role)
     {
         //
+        $role->permissions()->sync($request->permissions);
+        return redirect()->route('roles.index')->with('success', "$role->name Updated successfully");
     }
 
     /**

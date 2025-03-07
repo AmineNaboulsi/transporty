@@ -27,7 +27,7 @@ class PermissionSeeder extends Seeder
         //     ]);
         // }
 
-        $excludedRoutes = ['login', 'register', 'forgetpassword', 'signin', 'signup', 'posts.book', 'posts.index', 'home','storage.local'];
+        $excludedRoutes = ['login', 'register', 'forgetpassword', 'signin', 'signup', 'posts.book', 'posts.index', 'home','storage.local','logout'];
 
         $routes = collect(Route::getRoutes())->filter(function ($route) use ($excludedRoutes) {
             return $route->getName() && !in_array($route->getName(), $excludedRoutes);

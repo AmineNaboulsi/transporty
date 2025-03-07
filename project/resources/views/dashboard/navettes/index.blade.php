@@ -3,6 +3,7 @@
 @section('content')
 <div class="flex justify-between items-center">
     <h2 class="text-2xl font-semibold text-gray-800">Navettes Management</h2>
+    @if(Auth::user()->role->name != "admin")
     <a href="{{ route('navettes.create') }}"
        class="inline-flex items-center px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-md transition duration-300 ease-in-out transform hover:scale-105">
         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -10,6 +11,8 @@
         </svg>
         Create Navette
     </a>
+    @endif
+
 </div>
 <div class="overflow-x-auto mt-4">
     <table class="w-full whitespace-nowrap">
@@ -48,7 +51,7 @@
                     </div>
                 </td>
                 <td class="py-3 px-4 text-center">
-                    @if($navette->name !== "admin")
+                    @if(Auth::user()->role->name !== "admin")
                         <div class="flex justify-center space-x-2">
                             <a href="{{ route('navettes.edit', $navette->id) }}"
                             class="text-blue-500 hover:text-blue-700 transition duration-300">
@@ -67,6 +70,16 @@
                                     </svg>
                                 </button>
                             </form>
+                        </div>
+                    @else
+                        <div class="flex justify-center space-x-2">
+                            <a href="{{ route('navettes.edit', $navette->id) }}"
+                            class="text-gray-500 hover:text-gray-700 transition duration-300">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                                    <path d="M10 12a2 2 0 100-4 2 2 0 000 4z"/>
+                                    <path fill-rule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clip-rule="evenodd"/>
+                                </svg>
+                            </a>
                         </div>
                     @endif
                 </td>

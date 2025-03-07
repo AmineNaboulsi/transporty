@@ -16,9 +16,11 @@ class TagNavetteSeeder extends Seeder
     public function run(): void
     {
         //
-        NavetteTags::create([
-            "tag_id" =>  Tag::all()->random()->id,
-            "navette_id" => Navettes::all()->random()->id,
-        ]);
+        for ($i=0; $i < 100; $i++) {
+            NavetteTags::create([
+                "tag_id" =>  Tag::all()->random()->id,
+                "navette_id" => Navettes::all()->random()->id,
+            ]);
+        }
     }
 }
