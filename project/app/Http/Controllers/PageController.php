@@ -32,7 +32,8 @@ class PageController extends Controller
      *
      */
     public function navettes() {
-        return view('dashboard.navettes.index');
+        $navettes = navettes::query()->with(["cityArrive","cityStart"])->paginate(10);
+        return view('dashboard.navettes.index',compact("navettes"));
     }
     /**
      *
@@ -218,7 +219,7 @@ class PageController extends Controller
                 'ce.name as end_city',
                 'ce.region as start_city_region'
             )
-            ->where('users.id' , '=' , Auth::user()->id)
+            ->where('reservations.user_id' , '=' , Auth::user()->id)
             ->paginate(5);
         return view('profile.index',compact("upcomingReservations"));
     }

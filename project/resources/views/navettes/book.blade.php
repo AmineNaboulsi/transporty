@@ -117,7 +117,7 @@
         <div class="p-6">
             <h3 class="text-lg font-medium text-gray-900 mb-4">Complete Your Booking</h3>
 
-            <form action="{{route('booking.reservation', ['id' => $navette->id])}}" method="POST">
+            <form action="{{route('booking.store',  $navette->id)}}" method="POST">
                 @csrf
 
                 <div class="mt-6 bg-gray-50 p-4 rounded-md">

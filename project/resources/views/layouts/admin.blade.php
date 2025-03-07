@@ -46,7 +46,7 @@
             <div class="flex items-center justify-center h-16 p-4 border-b border-blue-800">
                 <div class="flex items-center space-x-2">
                     <i class="fas fa-shuttle-van text-white text-2xl"></i>
-                    <span class="text-xl font-bold text-white">Navette Admin</span>
+                    <span class="text-xl font-bold text-white">Transporty</span>
                 </div>
             </div>
 
@@ -58,11 +58,14 @@
                     </svg>
                 </div>
                 <h5 class="mt-2 text-lg font-medium text-white">{{ Auth::user()->name }}</h5>
-                <span class="text-sm font-medium text-blue-200">Administrator</span>
+                <span class="text-sm font-medium text-blue-200">{{ Auth::user()->role->name }}</span>
             </div>
 
             <!-- Sidebar navigation -->
             <nav class="px-4 mt-2 space-y-1">
+                @if(Auth::user()->role->name == 'admin')
+
+
                 <div class="border-b border-blue-800 pb-2 mb-4">
                     <p class="text-xs font-semibold text-blue-300 uppercase tracking-wider mb-2">Main</p>
 
@@ -117,7 +120,16 @@
                         <span>Bookings</span>
                     </a>
                 </div>
+                @elseif(Auth::user()->role->name == 'company')
 
+                <a href="{{ route('navettes.index') }}"class="flex items-center justify-between w-full px-4 py-3 text-white transition-colors rounded-lg hover:bg-blue-600">
+                    <div class="flex items-center">
+                         <span>Manage Navettes</span>
+                    </div>
+                </a>
+                @else
+                    <span>No permission to slider menu</span>
+                @endif
                 <!-- Logout -->
                 <form method="POST" action="{{ route('logout') }}">
                     @csrf

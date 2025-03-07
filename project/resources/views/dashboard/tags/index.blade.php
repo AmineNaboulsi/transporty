@@ -145,9 +145,13 @@
                             <div class="text-sm text-gray-500" >{{$tag->navettes_count}} navettes</div>
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                            <button type="submit" class="text-red-600 hover:text-red-900">
-                                <i class="fas fa-trash"></i>
-                            </button>
+                            <form action="{{route('tags.destroy',$tag->id)}}" method="POST">
+                                @csrf
+                                @method('POST')
+                                <button type="submit" class="text-red-600 hover:text-red-900">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </form>
                         </td>
                     </tr>
                     @endforeach

@@ -21,6 +21,7 @@ Route::get('/forget-password', [PageController::class , "forgetpassword"])->name
 Route::get('/', [PageController::class , "home"])->name('home');
 Route::get('/posts', [PageController::class , "posts"])->name('posts.index');
 Route::get('/posts/book/{id}', [PageController::class , "book"])->name('posts.book');
+Route::post('/posts/book/store{id}', [ReservationsController::class , "store"])->name('booking.store');
 // Route::get('/post/{id}', [PageController::class , "post"])->name('post');
 
 //Actions
@@ -46,6 +47,8 @@ Route::middleware([AuthValidation::class])->group(function(){
     //navettes
     Route::prefix('dashboard/navettes')->middleware('CheckPermission')->group(function () {
         Route::get('/', [PageController::class, "navettes"])->name('navettes.index');
+        Route::get('/create', [NavettesController::class, "create"])->name('navettes.create');
+        Route::post('/store', [NavettesController::class, "store"])->name('navettes.store');
     });
 
     //navettes

@@ -14,10 +14,10 @@ return new class extends Migration
         Schema::create('campanys', function (Blueprint $table) {
             $table->id();
             $table->foreignId("user_id")->constrained();
-            $table->string('description');
-            $table->string('logo');
-            $table->string('adresse');
-            $table->string('telephone');
+            $table->string('description')->nullable();
+            $table->string('logo')->nullable();
+            $table->string('adresse')->nullable();
+            $table->string('telephone')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

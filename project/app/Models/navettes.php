@@ -18,15 +18,18 @@ class navettes extends Model
     protected $fillable = [
         'campany_id',
         'nom',
+        'price',
         'description',
         "type_vehicule",
+        "date_navette",
         "places_disponible",
         "city_start",
         "city_arrive",
         "time_start",
         "time_end",
+        "time_end"
     ];
-
+   
     public function company()
     {
         return $this->belongsTo(campanys::class);

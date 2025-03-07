@@ -12,6 +12,10 @@ class User extends Authenticatable
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable;
 
+    public function company()
+    {
+        return $this->hasOne(campanys::class);
+    }
     public function role(){
         return $this->belongsTo(roles::class);
     }
