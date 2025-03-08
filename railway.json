@@ -1,0 +1,17 @@
+{
+    "services": {
+      "web": {
+        "dockerfile": "Docker/Dockerfile",
+        "healthcheck": "curl --fail http://localhost:80 || exit 1",
+        "ports": [80]
+      },
+      "postgres": {
+        "image": "postgres:17",
+        "environment": {
+          "POSTGRES_DB": "Youvento",
+          "POSTGRES_USER": "user",
+          "POSTGRES_PASSWORD": "user_password"
+        }
+      }
+    }
+  }
