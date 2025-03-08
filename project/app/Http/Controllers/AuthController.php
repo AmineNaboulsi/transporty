@@ -27,12 +27,11 @@ class AuthController extends Controller
 
         if (Auth::attempt($credentials)) {
             $user = Auth::user();
-
-            session('id',$user->id);
-            session('name',$user->name);
-            session('email',$user->email);
-
-            return redirect()->route('home');
+            if($user->google2fa_enabled){
+                return redirect()->route('2fa.verify');
+            }else{
+                return redirect()->route('home');
+            }
 
         }else{
             return redirect()->route('login')->with('error','The provided credentials are incorrect.');
@@ -81,13 +80,13 @@ class AuthController extends Controller
             'role_id' => $role->id
         ]);
         if($validatedData['account_type'] == 'company'){
-            $company = campanys::create([
+            campanys::create([
                 'name' => $validatedData['name'],
                 'user_id' => $user->id
             ]);
         }
 
-        if ($user && $company) {
+        if ($user ) {
             session()->put('id', $user->id);
             return response()->json([
                 'status' => true,

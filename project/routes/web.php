@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CitysController;
+use App\Http\Controllers\Google2FAController;
 use App\Http\Controllers\NavettesController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\ReservationsController;
@@ -10,6 +11,7 @@ use App\Http\Controllers\TagController;
 use App\Http\Controllers\UserController;
 use App\Http\Middleware\AuthValidation;
 use App\Http\Middleware\CheckPermission;
+use App\Http\Middleware\Google2FAMiddleware;
 use App\Models\permission;
 use Illuminate\Support\Facades\Route;
 
@@ -17,6 +19,11 @@ use Illuminate\Support\Facades\Route;
 //View
 Route::get('/login', [PageController::class , "login"])->name("login");
 Route::get('/register', [PageController::class , "register"])->name("register");
+Route::get('/2fa/verify', [Google2FAController::class, 'verify'])->name('2fa.verify');
+Route::post('/2fa/verify', [Google2FAController::class, 'authenticate'])->name('2fa.authenticate');
+Route::delete('/2fa/disable', [Google2FAController::class, 'disable'])->name('2fa.disable');
+
+
 Route::get('/forget-password', [PageController::class , "forgetpassword"])->name("forgetpassword");
 Route::get('/', [PageController::class , "home"])->name('home');
 Route::get('/posts', [PageController::class , "posts"])->name('posts.index');
@@ -84,11 +91,24 @@ Route::middleware([AuthValidation::class , CheckPermission::class])->group(funct
         Route::get('/edit', [PageController::class, "editprofile"])->name('profile.edit');
         Route::get('/reservations', [PageController::class, "profile"])->name('profile.reservations');
         Route::post('/cancel/{reservations:id}', [ReservationsController::class, "cancel"])->name('booking.cancel');
+
+        Route::middleware(AuthValidation::class )->group(function () {
+            Route::get('/2fa/setup', [Google2FAController::class, 'setup'])->name('2fa.setup');
+
+
+            Route::get('/test', function (){
+                return 'test';
+            })->middleware(Google2FAMiddleware::class)->name("test");
+        });
+
     });
 });
 
 //api
 Route::post('/signup', [AuthController::class , "signup"])->name("signup");
+
+
+
 // Route::get('/getcitys', [CitysController::class , "getcitys"])->name("getcitys");
 // Route::get('/getnavette', [CitysController::class , "getnavette"])->name("getcitys");
 // Route::get('/test', [PageController::class , "test"])->name("test");
