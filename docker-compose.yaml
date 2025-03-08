@@ -4,28 +4,17 @@ services:
     container_name: PostgresLaravel
     restart: always
     environment:
-      POSTGRES_DB: Youvento
-      POSTGRES_USER: user
-      POSTGRES_PASSWORD: user_password
+      POSTGRES_DB: ${DB_DATABASE:-Youvento}
+      POSTGRES_USER: ${DB_USERNAME:-user}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-user_password}
     ports:
       - "5432:5432"
     volumes:
       - postgres_db:/var/lib/postgresql/data
     networks:
       - laravel_network
-  pgadmin:
-    image: dpage/pgadmin4
-    container_name: PgAdminLaravel
-    restart: always
-    environment:
-      PGADMIN_DEFAULT_EMAIL: admin@mvc.com
-      PGADMIN_DEFAULT_PASSWORD: admin_password
-    ports:
-      - "8088:80"
-    networks:
-      - laravel_network
 
-  php:
+  app:
     build:
       context: .
       dockerfile: Docker/Dockerfile
@@ -34,23 +23,22 @@ services:
     volumes:
       - ./project:/var/www/html
     ports:
-      - "8010:80"
+      - "80:80"  
     depends_on:
       - postgres
     networks:
       - laravel_network
-  node:
-    image: node:18
-    container_name: node
-    restart: always 
-    working_dir: /var/www/html
-    volumes:
-      - ./project:/var/www/html
-    command: sh -c "npm install && npm run dev"
-    ports:
-      - "5173:5173" 
-    networks:
-      - laravel_network
+    environment:
+      DB_CONNECTION: pgsql
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_DATABASE: ${DB_DATABASE:-Youvento}
+      DB_USERNAME: ${DB_USERNAME:-user}
+      DB_PASSWORD: ${DB_PASSWORD:-user_password}
+      APP_ENV: ${APP_ENV:-production}
+      APP_DEBUG: ${APP_DEBUG:-false}
+      APP_URL: ${APP_URL:-http://localhost}
+
 volumes:
   postgres_db:
   
